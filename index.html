@@ -12,6 +12,11 @@
   <body>
     <header id="store">
       <h1>Greengrocers</h1>
+      <div id="filterContainer">
+        <button class="btn active filterBtn" onclick="filterItems('all')">All</button>
+        <button class="btn filterBtn" onclick="filterItems('fruit')">Fruits</button>
+        <button class="btn filterBtn" onclick="filterItems('vegetable')">Vegetables</button>
+      </div>
       <ul class="item-list store--item-list">
         <!-- Take a look at store-item.html -->
       </ul>
