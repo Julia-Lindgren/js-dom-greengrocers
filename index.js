@@ -61,7 +61,9 @@ const state = {
       type: 'vegetable'
     }
   ],
-  cart: []
+  cart: [],
+  filterType: 'all',
+  sortType: null
 };
 
 
@@ -69,6 +71,8 @@ const state = {
 const storeItemList = document.querySelector('.store--item-list');
 
 function renderStoreItems(filteredItems) {
+  storeItemList.innerHTML = '';
+
   filteredItems.forEach(item => {
     
     const listItem = document.createElement('li');
@@ -98,20 +102,40 @@ function renderStoreItems(filteredItems) {
 }
 
 const filterButtons = document.querySelectorAll('.filterBtn');
+const sortButtons = document.querySelectorAll('.sortBtn');
 
-function filterItems(category) {
+filterButtons.forEach(button => {
+  button.addEventListener('click', (event) => {
+    state.filterType = event.target.getAttribute('data-filter');
+    filterAndSortItems();
+  });
+});
 
-  storeItemList.innerHTML = '';
+sortButtons.forEach(button => {
+  button.addEventListener('click', (event) => {
+    state.sortType = event.target.getAttribute('data-sort');
+    filterAndSortItems(); 
+  });
+});
 
-  const filteredItems = state.items.filter(item => {
-    if (category === 'all') return true;
+function filterAndSortItems() {
+
+  let filteredItems = state.items.filter(item => {
     
-    return item.type === category;
+    if (state.filterType === 'all') return true;
+    
+    return item.type === state.filterType;
   });
 
-  renderStoreItems(filteredItems);
+  if (state.sortType === 'alphabetical') {
+    filteredItems.sort((a, b) => a.name.localeCompare(b.name)); 
+  } else if (state.sortType === 'price') {
+    filteredItems.sort((a, b) => a.price - b.price); 
+  }
+    
+    renderStoreItems(filteredItems);
 }
-
+  
 function addItemToCart(itemId) {
   const cartItem = state.cart.find(item => item.id === itemId);
   
