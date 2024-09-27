@@ -191,3 +191,16 @@ button {
   margin-bottom: 20px;
 }
 
+
+#addProductForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#newProductForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}

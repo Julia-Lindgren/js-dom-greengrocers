@@ -221,6 +221,30 @@ function updateTotal() {
   totalNumber.textContent = `£${total.toFixed(2)}`;
 }
 
+const newProductForm = document.getElementById('newProductForm');
+
+newProductForm.addEventListener('submit', (event) => {
+  event.preventDefault(); 
+
+  const name = document.getElementById('productName').value;
+  const price = parseFloat(document.getElementById('productPrice').value);
+  const type = document.getElementById('productType').value;
+
+  const newProductId = `00${state.items.length + 1}-${name.toLowerCase().replace(/\s+/g, '-')}`;
+
+  const newProduct = {
+    id: newProductId,
+    name: name,
+    price: price,
+    type: type
+  };
+  
+  state.items.push(newProduct); 
+  filterAndSortItems();
+
+  newProductForm.reset();
+});
+
 renderStoreItems(state.items);
 
 
